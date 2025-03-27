@@ -11,6 +11,18 @@ def test_get_user_by_id(base_url, user_iddd):
     assert data["data"]["id"] == user_iddd
 
 
+@pytest.mark.parametrize(
+    "page, user_id",
+    [(1, 2), (2, 4), (3, 6)]
+)
+def test_get_user_by_page(base_url, page, user_id):
+    response = requests.get(f"{base_url}/users/{user_id}?page={page}")
+    assert response.status_code == 200
+    data = response.json()
+    assert "data" in data
+    assert data["data"]["id"] == user_id
+
+
 def test_get_users(base_url):
     response = requests.get(f"{base_url}/users?page=1")
     assert response.status_code == 200

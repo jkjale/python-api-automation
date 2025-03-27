@@ -19,18 +19,6 @@ def test_create_user_with_various_data(base_url, namee, jobb):
     assert response_data["job"] == jobb
 
 
-@pytest.mark.parametrize(
-    "page, user_id",
-    [(1, 2), (2, 4), (3, 6)]
-)
-def test_get_user_by_page(base_url, page, user_id):
-    response = requests.get(f"{base_url}/users/{user_id}?page={page}")
-    assert response.status_code == 200
-    data = response.json()
-    assert "data" in data
-    assert data["data"]["id"] == user_id
-
-
 def test_create_user(base_url, new_user_data):
     response = requests.post(f"{base_url}/users", json=new_user_data)
     assert response.status_code == 201
